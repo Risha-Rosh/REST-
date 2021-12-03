@@ -31,19 +31,11 @@ namespace WebApplication1
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            // если проект в процессе разработки
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            app.UseMiddleware<TokenMiddleware>();
 
-            app.UseRouting();
-            app.UseEndpoints(endpoints =>
+            app.Run(async (context) =>
             {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
+                await context.Response.WriteAsync("Hello World");
             });
         }
     }
